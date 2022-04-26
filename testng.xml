@@ -9,7 +9,7 @@
     <test name =" Sample Tests 1 ">
 
         <classes>
-            <class name="TestRun" />
+            <class name="LoginTest" />
 
         </classes>
 
