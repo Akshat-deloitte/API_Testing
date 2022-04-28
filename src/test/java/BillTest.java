@@ -10,15 +10,17 @@ import static org.hamcrest.Matchers.*;
 
 public class BillTest {
     public String token = "";
-    File newrequest = new File("C:\\Users\\agajendra\\Desktop\\API_TESTING\\API_Testing\\newrequest.json");
-    File postrequest = new File("C:\\Users\\agajendra\\Desktop\\API_TESTING\\API_Testing\\postrequest.json");
+    File newrequest = new File("C:\\Users\\adityakumar3\\API_Testing\\new_request.json");
+    File postrequest = new File("C:\\Users\\adityakumar3\\API_Testing\\postrequest.json");
+
+
     @BeforeTest
-    public void getting_token() throws IOException
-    {
-        token = BaseUtilities.test_get_token();
+    public void Get_Bearer_Token() throws IOException {
+         token = BaseUtilities.test_get_token();
     }
 
-    @Test(priority = 1)
+
+    @Test(priority = 20)
     public void Get_All_Bills(){
         try{
 
@@ -45,7 +47,7 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 2)
+    @Test(priority = 21)
     public void Get_Bill_By_id(){
         try{
 
@@ -70,7 +72,7 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 3)
+    @Test(priority = 22)
     public void Paid_bills(){
         try{
 
@@ -98,7 +100,7 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 4)
+    @Test(priority = 23)
     public void New_Request(){
         try
         {
@@ -127,7 +129,7 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 5)
+    @Test(priority = 24)
     public void Send_mail_to_Client(){
         try{
 
@@ -153,7 +155,7 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 6)
+    @Test(priority = 25)
     public void Change_Status(){
         try{
 
@@ -182,33 +184,8 @@ public class BillTest {
         }
     }
 
-    /*@Test(priority = 7)
-    public void Delete_Request(){
-        try{
 
-            Response response = given()
-                    .baseUri(BaseUtilities.url).
-                    body(newrequest).
-                    header("Authorization",
-                            "Bearer " + token).header("content-type","application/json")
-                    .when()
-                    .delete("/bill/76")
-                    .then()
-                    .statusCode(200)
-                    .extract().response();
-            if (response.statusCode() == 200)
-            {
-                Assert.assertEquals(response.statusCode(),200);
-                System.out.println(response.getBody().asString());
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-    }*/
-
-    @Test(priority = 8)
+    @Test(priority = 26)
     public void Post_Request(){
         try{
 
