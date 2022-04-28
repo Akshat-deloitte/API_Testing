@@ -286,11 +286,6 @@ public class MemberTest {
 
 
 
-
-
-
-
-
     @Test(priority = 5)
     public static void validating_addProjects()
     {
@@ -321,7 +316,7 @@ public class MemberTest {
 
             String statusCode = String.valueOf(response.getStatusCode());
 
-            if(!statusCode.equals(200))
+            if(!statusCode.equals("200"))
             {
                 Assert.assertTrue(false);
             }
@@ -334,6 +329,224 @@ public class MemberTest {
 
 
     }
+
+   /*
+   *Negative Test Cases Below
+   */
+
+    @Test(priority = 100)
+    public static void validatinG_Member_by_invalid_id()
+    {
+        log.info("validating_All_Member with invalid id");
+        try{
+
+            Response response = given()
+                    .baseUri(BaseUtilities.url).
+                    header("Authorization",
+                            "Bearer " + token).header("content-type","application/json")
+                    .when()
+                    .get("/member/" + "1a")
+                    .then()
+                    .extract().response();
+            System.out.println(response.getBody().asString());
+
+            JsonPath jsnPath = response.jsonPath();
+            String final_res = jsnPath.get("name");
+
+
+            String statusCode = String.valueOf(response.getStatusCode());
+            System.out.println(statusCode);
+            if(statusCode.equals("400"))
+            {
+                System.out.println(final_res  + " Able to detect invalid id (please type valid id)");
+                Assert.assertTrue(true);
+            }
+            else
+            {
+                Assert.assertTrue(false);
+                System.out.println("Unable to detect invalid id");
+            }
+
+        }catch (Exception e){
+            log.error("Can't Validate Member_by id, some error Occurred");
+            System.out.println(e);
+        }
+    }
+
+
+    @Test(priority = 101)
+    public static void validating_updateMember_by_wrongData()
+    {
+        log.info("validating_UpdateMember");
+        Map bodyParameters = new LinkedHashMap();
+        bodyParameters.put("name",Name_toBeUpdated+";");
+
+        Gson gson = new Gson();
+        String json = gson.toJson(bodyParameters, LinkedHashMap.class);
+
+
+        try{
+
+            Response response = given()
+                    .baseUri(BaseUtilities.url).
+                    header("Authorization",
+                            "Bearer " + token).header("content-type","application/json")
+                    .body(json).
+                    when()
+                    .put("/member/" + id_ofMember)
+                    .then()
+                    .extract().response();
+
+
+            JsonPath jsnPath = response.jsonPath();
+            String name_inResponse = jsnPath.get("name");
+
+            System.out.println("Initial name" + name_ofMember);
+            System.out.println("After update name is " + name_inResponse);
+
+            System.out.println("Response " + response.getBody().asString());
+
+            String statusCode = String.valueOf(response.getStatusCode());
+            System.out.println(statusCode);
+
+            if(statusCode.equals("400"))
+            {
+                System.out.println("Invalid data Can be detected (PLease send valid data for updation)");
+                Assert.assertTrue(true);
+            }
+
+        }catch (Exception e){
+            log.error("Unable to detect Invalid data");
+            System.out.println(e);
+        }
+
+
+    }
+
+
+
+
+    @Test(priority = 102)
+    public static void validating_DeleteMember_wrongID()
+    {
+        log.info("validating_DeleteMember");
+        try{
+
+            Response response = given()
+                    .baseUri(BaseUtilities.url).
+                    header("Authorization",
+                            "Bearer " + token).header("content-type","application/json")
+                            .
+                    when()
+                    .delete("/member/"+ "shfiwi" )
+                    .then()
+                    .extract().response();
+
+
+
+            String statusCode = String.valueOf(response.getStatusCode());
+            System.out.println(statusCode);
+
+            if(statusCode.equals("400"))
+            {
+                System.out.println("Application is able to detect invalid id (PLease type valid id to delete the member)");
+                Assert.assertTrue(true);
+            }
+            else
+            {
+                System.out.println("Application is Unable to detect invalid id");
+                Assert.assertTrue(false);
+            }
+        }catch (Exception e){
+            System.out.println(e);
+            log.error("Can't Validate Delete Member, Some Error Occured");
+        }
+
+
+    }
+
+
+    @Test(priority = 103)
+    public static void validating_updateMember_by_emotyData()
+    {
+        log.info("validating_UpdateMember BY PASSING nothing");
+        try{
+
+            Response response = given()
+                    .baseUri(BaseUtilities.url).
+                    header("Authorization",
+                            "Bearer " + token).header("content-type","application/json")
+                    .body("").
+                    when()
+                    .put("/member/" + id_ofMember)
+                    .then()
+                    .extract().response();
+
+
+            JsonPath jsnPath = response.jsonPath();
+            String name_inResponse = jsnPath.get("name");
+
+            System.out.println("Initial name" + name_ofMember);
+            System.out.println("After update name is " + name_inResponse);
+
+            System.out.println("Response " + response.getBody().asString());
+
+            String statusCode = String.valueOf(response.getStatusCode());
+            System.out.println(statusCode);
+
+            if(statusCode.equals("400"))
+            {
+                System.out.println("Invalid data Can be detected (PLease send valid data for updation)");
+                Assert.assertTrue(true);
+            }
+
+        }catch (Exception e){
+            log.error("Unable to detect Invalid data");
+            System.out.println(e);
+        }
+
+
+    }
+
+    @Test(priority = 100)
+    public static void validatinG_Member_by__id()
+    {
+        log.info("validating_All_Member by passing name instead of i id");
+        try{
+
+            Response response = given()
+                    .baseUri(BaseUtilities.url).
+                    header("Authorization",
+                            "Bearer " + token).header("content-type","application/json")
+                    .when()
+                    .get("/member/" + "AKSHAT")
+                    .then()
+                    .extract().response();
+            System.out.println(response.getBody().asString());
+
+            JsonPath jsnPath = response.jsonPath();
+            String final_res = jsnPath.get("name");
+
+
+            String statusCode = String.valueOf(response.getStatusCode());
+            System.out.println(statusCode);
+            if(statusCode.equals("400"))
+            {
+                System.out.println(final_res  + " Able to detect invalid id (please type valid id)");
+                Assert.assertTrue(true);
+            }
+            else
+            {
+                Assert.assertTrue(false);
+                System.out.println("Unable to detect invalid id");
+            }
+
+        }catch (Exception e){
+            log.error("Can't Validate Member_by id, some error Occurred");
+            System.out.println(e);
+        }
+    }
+
 
 
 

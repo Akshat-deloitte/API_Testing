@@ -16,7 +16,7 @@ public class LoginTest {
     private static Logger log  = LogManager.getLogger(LoginTest.class);
 
     public String token = "";
-    public  String path_of_file = "C:\\Users\\akashyab\\Desktop\\ProjectData.xlsx";
+    public  String path_of_file = "C:\\Users\\adityakumar3\\Desktop\\Learnings\\databaseAPI.xlsx";
     public  String sheet_Name = "Database";
     public String title = BaseUtilities.getCellvalue(path_of_file,sheet_Name,1,0);
     public String description = BaseUtilities.getCellvalue(path_of_file,sheet_Name,1,1);
@@ -32,6 +32,7 @@ public class LoginTest {
     public LoginTest() throws IOException {
     }
 
+
     @BeforeTest
     public void Get_Bearer_Token() throws IOException {
         token = BaseUtilities.test_get_token();
@@ -39,7 +40,7 @@ public class LoginTest {
     }
 
 
-    @Test(priority = 1)
+    @Test(priority = 6)
     public void Get_All_Projects() {
         try {
 
@@ -72,7 +73,7 @@ public class LoginTest {
     }
 
 
-    @Test(priority = 2)
+    @Test(priority = 7)
     public void Get_All_Project_ByMonth() {
         try {
 
@@ -104,7 +105,7 @@ public class LoginTest {
     }
 
 
-    @Test(priority = 3)
+    @Test(priority = 8)
     public void Add_Project() {
         try {
 
@@ -139,7 +140,7 @@ public class LoginTest {
     }
 
 
-    @Test(priority = 4)
+    @Test(priority = 9)
     public void Get_Project_ById() {
         try {
 
@@ -171,7 +172,7 @@ public class LoginTest {
     }
 
 
-    @Test(priority = 5)
+    @Test(priority = 10)
     public void Update_Project() {
         try {
 
@@ -203,7 +204,7 @@ public class LoginTest {
     }
 
 
-    @Test(priority = 6)
+    @Test(priority = 11)
     public void Delete_Project() {
         try {
 
@@ -226,7 +227,7 @@ public class LoginTest {
 
 
 
-    @Test(priority = 7)
+    @Test(priority = 12)
     public void Add_Members_ToProject() {
         try {
 
