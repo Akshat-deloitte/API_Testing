@@ -1,0 +1,14 @@
+{
+  "month": "feb",
+  "year": 0,
+  "amount": 1000.00,
+  "generatedDate": "2022-02-02",
+  "generatedBy": 0,
+  "completionStatusTeamLead": "declined",
+  "commentLead": "comment 1 by team lead",
+  "commentClient": "comment 2 by client",
+  "completionStatusClient":  "underConsideration",
+  "project":{
+    "projectId":1
+  }
+}

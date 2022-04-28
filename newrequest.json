@@ -1,0 +1,6 @@
+{
+  "amount": 6000.0,
+  "comment": "commenting on bill 1",
+  "completionStatusTeamLead": "declined",
+  "completionStatusClient":  "acceptedByClient"
+}

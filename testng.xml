@@ -1,0 +1,19 @@
+<!DOCTYPE  suite  SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name = "src.test.java" parallel ="tests" thread-count ="2">
+
+    <listeners>
+        <listener class-name="Listeners"></listener>
+    </listeners>
+
+
+    <test name =" Sample Tests 1 ">
+
+        <classes>
+            <class name="LoginTest" />
+
+        </classes>
+
+
+    </test>
+
+</suite>
