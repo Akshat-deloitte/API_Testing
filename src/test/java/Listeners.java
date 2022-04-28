@@ -5,8 +5,6 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-
-
 public class Listeners implements ITestListener {
 
 
@@ -23,19 +21,12 @@ public class Listeners implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult result) {
         test.pass("the test case is passed ");
-
-
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-
-        test.fail("The test is failed ");
-//        LogConfig.logger.error("Test Failed , check for errors!");
-
-
+        test.fail("Test Failed");
     }
-
 
     @Override
     public void onTestSkipped(ITestResult result) {
@@ -46,17 +37,14 @@ public class Listeners implements ITestListener {
 
     }
 
-
     @Override
     public void onStart(ITestContext context) {
         extent = ExtentReport.ReportGenerator();
 
     }
 
-
     @Override
     public void onFinish(ITestContext context) {
-//        LogConfig.logger.info("Completed all Test");
         extent.flush();
     }
 }

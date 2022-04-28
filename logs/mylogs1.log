@@ -1,0 +1,13 @@
+[INFO ] 2022-04-28 12:07:14.209 [TestNG-tests-1] LoginTest - Response recieved
+[INFO ] 2022-04-28 12:07:14.661 [TestNG-tests-1] LoginTest - Response recieved
+[INFO ] 2022-04-28 12:07:15.116 [TestNG-tests-1] LoginTest - Project created
+[INFO ] 2022-04-28 12:07:15.578 [TestNG-tests-1] LoginTest - Response recieved
+[INFO ] 2022-04-28 12:07:16.018 [TestNG-tests-1] LoginTest - Description updated
+[INFO ] 2022-04-28 12:07:16.904 [TestNG-tests-1] LoginTest - Project Deleted
+[INFO ] 2022-04-28 12:10:36.502 [TestNG-tests-1] LoginTest - Response recieved
+[INFO ] 2022-04-28 12:10:36.972 [TestNG-tests-1] LoginTest - Response recieved
+[INFO ] 2022-04-28 12:10:37.456 [TestNG-tests-1] LoginTest - Project created
+[INFO ] 2022-04-28 12:10:37.897 [TestNG-tests-1] LoginTest - Response recieved
+[INFO ] 2022-04-28 12:10:38.351 [TestNG-tests-1] LoginTest - Description updated
+[INFO ] 2022-04-28 12:10:39.250 [TestNG-tests-1] LoginTest - Project Deleted
+[ERROR] 2022-04-28 12:10:39.687 [TestNG-tests-1] LoginTest - Failed due to Invalid body

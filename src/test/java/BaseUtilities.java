@@ -1,22 +1,16 @@
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.JSONObject;
-import com.aventstack.extentreports.ExtentTest;
-import io.restassured.response.Response;
-import org.json.JSONObject;
-import org.testng.annotations.Test;
-//import test.BaseClass;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-//import static config.TestUserData.LoginUserDataJson;
 import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.config;
-//import static org.apache.commons.codec.digest.UnixCrypt.body;
+import java.time.LocalDateTime;
 
 public class BaseUtilities {
 
@@ -28,25 +22,27 @@ public class BaseUtilities {
     public static String path_of_DB = "C:\\Users\\Database\\Credentials.xlsx";
     public static String sheet_name = "DB";
     public static String url = "https://acb-be-urtjok3rza-wl.a.run.app";
+    private static FileOutputStream fileoutput;
 
 
     public static String test_get_token() throws IOException {
         Response response = given().
                 baseUri(url).
-                body(String.valueOf(BaseUtilities.Create_user_json(getCellvalue(path_of_DB,sheet_name,1,0),
-                        getCellvalue(path_of_DB,sheet_name,1,1)))).
+                body(Create_user_json(getCellvalue(path_of_DB,sheet_name,1,0),
+                        getCellvalue(path_of_DB,sheet_name,1,1)))
+                .header("content-type","application/json").
                 when().
                 post("/api/auth/signin").
                 then().
                 extract().response();
-
-        JSONObject arr = new JSONObject(response.asString());
-        return arr.get("token").toString();
+        JsonPath jsnPath = response.jsonPath();
+        String final_res = jsnPath.get("accessToken");
+        return final_res;
     }
 
     public  static  org.json.simple.JSONObject Create_user_json(String Name,String Pass) throws IOException {
         org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
-        obj.put("name",Name);
+        obj.put("username",Name);
         obj.put("password",Pass);
         return obj;
     }
@@ -65,7 +61,7 @@ public class BaseUtilities {
     }
 
     public static void Write_data_id(String id, int i,int j) {
-        String Excel_file_path = ("C:\\Users\\akashyab\\Downloads\\ToDo_Cred.xlsx");
+        String Excel_file_path = ("C:\\Users\\akashyab\\Desktop\\ProjectData.xlsx");
         try {
             FileInputStream fis = new FileInputStream(Excel_file_path);
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
@@ -89,9 +85,18 @@ public class BaseUtilities {
         }
     }
 
-
-
-
-
-
+    public static void writeFILE(String FilePath,String SheetName,int rownum,int colnum,String data) throws IOException
+    {
+        fileinput=new FileInputStream(FilePath);
+        workbook=new XSSFWorkbook(fileinput);
+        worksheet=workbook.getSheet(SheetName);
+        row=worksheet.getRow(rownum);
+        cell=row.createCell(colnum);
+        cell.setCellValue(data);
+        fileoutput = new FileOutputStream(FilePath);
+        workbook.write(fileoutput);
+        workbook.close();
+        fileinput.close();
+        fileoutput.close();
+    }
 }
