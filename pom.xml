@@ -7,6 +7,7 @@
     <groupId>groupId</groupId>
     <artifactId>API_Testing</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <build>
         <plugins>
             <plugin>
@@ -73,5 +74,4 @@
             <version>2.8.9</version>
         </dependency>
     </dependencies>
-    
 </project>

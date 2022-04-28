@@ -10,12 +10,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-
 import static io.restassured.RestAssured.given;
 public class BaseUtilities {
 
@@ -46,17 +43,12 @@ public class BaseUtilities {
         return final_res;
     }
 
-
-
-
-
     public  static  org.json.simple.JSONObject Create_user_json(String Name,String Pass) throws IOException {
         org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
         obj.put("username",Name);
         obj.put("password",Pass);
         return obj;
     }
-
 
     public static String getCellvalue(String FilePath, String SheetName, int rownum, int colnum) throws IOException {
 
@@ -69,7 +61,6 @@ public class BaseUtilities {
         String values = formatter.formatCellValue(cell);
         return values;
     }
-
 
     public static void writeFILE(String FilePath,String SheetName,int rownum,int colnum,String data) throws IOException
     {
@@ -92,5 +83,3 @@ public class BaseUtilities {
         String json = gson.toJson(bodyParameters, LinkedHashMap.class);
         return json;
     }
-
-}
