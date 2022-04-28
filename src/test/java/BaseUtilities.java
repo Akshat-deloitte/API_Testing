@@ -1,6 +1,11 @@
+
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.ResponseBody;
+
 import com.google.gson.Gson;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -14,6 +19,10 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import static io.restassured.RestAssured.given;
+
+
+
+
 public class BaseUtilities {
 
     public static FileInputStream fileinput;
@@ -22,18 +31,20 @@ public class BaseUtilities {
     public static XSSFSheet worksheet;
     public static XSSFRow row;
     public static XSSFCell cell;
-    public static String path_of_DB = "C:\\Users\\Database\\Credentials.xlsx";
+    public static String path_of_DB = "C:\\Users\\agajendra\\Desktop\\Api_testing\\API_Testing\\Credentials.xlsx";
     public static String sheet_name = "DB";
     public static String url = "https://acb-be-urtjok3rza-wl.a.run.app";
+
     public static String path_of_apiDatabase = "C:\\Users\\adityakumar3\\Desktop\\Learnings\\databaseAPI.xlsx";
     public static String sheetName_apiDB = "database_sheet";
+
 
     public static String test_get_token() throws IOException {
         Response response = given().
                 baseUri(url).
-                body(Create_user_json(getCellvalue(path_of_DB,sheet_name,1,0),
-                        getCellvalue(path_of_DB,sheet_name,1,1)))
-                .header("content-type","application/json").
+                body(Create_user_json(getCellvalue(path_of_DB, sheet_name, 1, 0),
+                        getCellvalue(path_of_DB, sheet_name, 1, 1)))
+                .header("content-type", "application/json").
                 when().
                 post("/api/auth/signin").
                 then().
@@ -43,10 +54,10 @@ public class BaseUtilities {
         return final_res;
     }
 
-    public  static  org.json.simple.JSONObject Create_user_json(String Name,String Pass) throws IOException {
+    public static org.json.simple.JSONObject Create_user_json(String Name, String Pass) throws IOException {
         org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
-        obj.put("username",Name);
-        obj.put("password",Pass);
+        obj.put("username", Name);
+        obj.put("password", Pass);
         return obj;
     }
 
@@ -62,24 +73,24 @@ public class BaseUtilities {
         return values;
     }
 
-    public static void writeFILE(String FilePath,String SheetName,int rownum,int colnum,String data) throws IOException
-    {
-        fileinput=new FileInputStream(FilePath);
-        workbook=new XSSFWorkbook(fileinput);
-        worksheet=workbook.getSheet(SheetName);
-        row=worksheet.getRow(rownum);
-        cell=row.createCell(colnum);
+
+    public static void writeFILE(String FilePath, String SheetName, int rownum, int colnum, String data) throws IOException {
+        fileinput = new FileInputStream(FilePath);
+        workbook = new XSSFWorkbook(fileinput);
+        worksheet = workbook.getSheet(SheetName);
+        row = worksheet.getRow(rownum);
+        cell = row.createCell(colnum);
         cell.setCellValue(data);
-        fileoutput=new FileOutputStream(FilePath);
+        fileoutput = new FileOutputStream(FilePath);
         workbook.write(fileoutput);
         workbook.close();
         fileinput.close();
         fileoutput.close();
     }
 
-    public static String getJSON(Map bodyParameters)
-    {
+    public static String getJSON(Map bodyParameters) {
         Gson gson = new Gson();
         String json = gson.toJson(bodyParameters, LinkedHashMap.class);
         return json;
     }
+}
