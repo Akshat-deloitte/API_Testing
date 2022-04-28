@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -14,8 +16,8 @@ import static io.restassured.RestAssured.given;
 public class MemberTest {
 
 
-    public static String pat_h = BaseUtilities.path_of_apiDatabase;
-    public static String sheetNam_e = "dbb";
+    private  static final String LOG_FILE = "log4j.properties";
+    private static Logger log  = LogManager.getLogger(MemberTest.class);
 
     public static String token;
     static String member_id;
@@ -66,7 +68,10 @@ public class MemberTest {
 
 
     public static void get_availableUserList() {
-
+        /*
+        *This Function will update the available users list
+        * everytime when it is called
+         */
             Response response = given()
                     .baseUri(BaseUtilities.url).
                     header("Authorization",
@@ -97,6 +102,8 @@ public class MemberTest {
     }
 
 
+
+
     @BeforeTest
     public void Get_Bearer_Token() throws IOException {
         token = BaseUtilities.test_get_token();
@@ -105,6 +112,7 @@ public class MemberTest {
     @Test(priority = 1)
     public static void validating_All_Member()
     {
+        log.info("validating_All_Member");
         try{
 
             Response response = given()
@@ -121,10 +129,7 @@ public class MemberTest {
             int size = response.jsonPath().getList("id").size();
             JsonPath jsnPath = response.jsonPath();
 
-//            JsonPath j = new JsonPath(response.asString());
-//            System.out.println("" +j.getString("[0].name"));
-
-            for(int i=1;i<=size;i++) {
+                for(int i=1;i<=size;i++) {
                 String id =  jsnPath.get("[" + i + "]" + ".id").toString();
                 String name = jsnPath.get("[" + i + "]" + ".name").toString();
 
@@ -135,9 +140,6 @@ public class MemberTest {
 
 
             }
-
-
-
             if(response.getBody().asString().length() !=0)
             {
                 System.out.println(   size +  "  are available in the list" );
@@ -147,6 +149,7 @@ public class MemberTest {
                 Assert.assertTrue(false);
             }
         }catch (Exception e){
+            log.error("Can't Validate All Member, Error Occured");
             System.out.println(e);
         }}
 
@@ -156,6 +159,7 @@ public class MemberTest {
      @Test(priority = 2)
     public static void validating_Member_by_id()
     {
+        log.info("validating_Member_by_id");
         try{
 
             Response response = given()
@@ -188,6 +192,7 @@ public class MemberTest {
             }
 
         }catch (Exception e){
+            log.error("Can't Validate Member_by id, some error Occurred");
             System.out.println(e);
         }
     }
@@ -196,7 +201,7 @@ public class MemberTest {
     @Test(priority = 3)
     public static void validating_UpdateMember()
     {
-
+       log.info("validating_UpdateMember");
         Map bodyParameters = new LinkedHashMap();
             bodyParameters.put("name",Name_toBeUpdated);
 
@@ -233,6 +238,7 @@ public class MemberTest {
             }
 
         }catch (Exception e){
+            log.error("Can't Validate Validating Update_Member,Some error Occured");
             System.out.println(e);
         }
 
@@ -245,6 +251,7 @@ public class MemberTest {
     @Test(priority = 4)
     public static void validating_DeleteMember()
     {
+        log.info("validating_DeleteMember");
         try{
 
             Response response = given()
@@ -269,6 +276,7 @@ public class MemberTest {
             }
         }catch (Exception e){
             System.out.println(e);
+            log.error("Can't Validate Delete Member, Some Error Occured");
         }
 
 
@@ -286,6 +294,7 @@ public class MemberTest {
     @Test(priority = 5)
     public static void validating_addProjects()
     {
+        log.info("validating_addProjects");
 
         Map bodyParameters = new LinkedHashMap();
         bodyParameters.put("project","123");
@@ -319,6 +328,7 @@ public class MemberTest {
 
 
         }catch (Exception e){
+            log.error("Can't Validate addProjects,Some error Occured");
             System.out.println(e);
         }
 
