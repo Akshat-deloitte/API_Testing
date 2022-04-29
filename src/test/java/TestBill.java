@@ -1,4 +1,6 @@
 import io.restassured.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -8,7 +10,9 @@ import static io.restassured.RestAssured.given;
 
 public class TestBill extends BaseUtilities {
     public String t = "";
-    File new_request = new File("C:\\Users\\ananshankar\\Documents\\ProductWeek\\API\\API_Testing\\new_request.json");
+    File new_request = new File("C:\\Users\\akashyab\\Desktop\\APITesting_ClientBilling\\API_Testing\\new_request.json");
+    private  static final String LOG_FILE = "log4j.properties";
+    private static Logger log  = LogManager.getLogger(LoginTest.class);
 
     /**
      * t -> variable to store the token data
@@ -20,7 +24,7 @@ public class TestBill extends BaseUtilities {
         t = BaseUtilities.test_get_token();
     }
 
-    @Test(priority = 1)
+    @Test(priority = 16)
     public void send_mail_to_team_lead() {
         try{
             Response response = given()
@@ -29,24 +33,25 @@ public class TestBill extends BaseUtilities {
                     .header("Authorization", "Bearer " + t)
                     .header("content-type","application/json")
                     .when()
-                    .put("/bill/69")
+                    .put("/bill/78")
                     .then()
                     .statusCode(200)
                     .extract().response();
             if (response.statusCode() == 200)
             {
+                log.info("sending mail to team lead");
                 Assert.assertEquals(response.statusCode(),200);
                 System.out.println(response.getBody().asString());
             }
             else
-                System.out.println("There is an error in sending mail to team lead...!!!");
+                log.error("Cannot send mail to team lead.!");
         }
         catch (Exception e) {
-            System.out.println(e);
+            log.error("Error message "+e.getMessage());
         }
     }
 
-    @Test(priority = 2)
+    @Test(priority = 17)
     public void get_verified_bills(){
         try{
             Response response = given()
@@ -54,22 +59,22 @@ public class TestBill extends BaseUtilities {
                     .header("Authorization", "Bearer " + t)
                     .header("content-type","application/json")
                     .when()
-                    .get("/bill/verified/3/2022")
+                    .get("/bill/verified/4/2022")
                     .then()
                     .statusCode(200)
                     .extract().response();
             if (response.getBody().asString() != null)
-                System.out.println(response.getBody().asString());
+                log.info("retrieving verified bills");
             else
-                System.out.println("There is an error in verified_bill...!!!");
+                log.error("Cannot view verified bills.!");
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            log.error("Error message "+e.getMessage());
         }
     }
 
-    @Test(priority = 3)
+    @Test(priority = 18)
     public void get_unverified_bills(){
         try{
             Response response = given()
@@ -77,22 +82,22 @@ public class TestBill extends BaseUtilities {
                     .header("Authorization", "Bearer " + t)
                     .header("content-type","application/json")
                     .when()
-                    .get("/bill/unverified/2/2022")
+                    .get("/bill/unverified/4/2022")
                     .then()
                     .statusCode(200)
                     .extract().response();
             if (response.getBody().asString() != null)
-                System.out.println(response.getBody().asString());
+                log.info("retrieving unverified bills");
             else
-                System.out.println("There is an error in unverified_bill...!!!");
+                log.error("Cannot view unverified bills.!");
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            log.error("Error message "+e.getMessage());
         }
     }
 
-    @Test(priority = 4)
+    @Test(priority = 19)
     public void unpaid_bills() {
         try{
             Response response = given()
@@ -100,22 +105,22 @@ public class TestBill extends BaseUtilities {
                     .header("Authorization", "Bearer " + t)
                     .header("content-type","application/json")
                     .when()
-                    .get("bill/unpaid/2/2022")
+                    .get("bill/unpaid/4/2022")
                     .then()
                     .statusCode(200)
                     .extract().response();
             if (response.getBody().asString() != null)
-                System.out.println(response.getBody().asString());
+                log.info("retrieving unpaid bills");
             else
-                System.out.println("There is an error in unpaid_bill...!!!");
+                log.error("Cannot view unpaid bills.!");
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            log.error("Error message "+e.getMessage());
         }
     }
 
-    @Test(priority = 5)
+    @Test(priority = 20)
     public void change_client_status() {
         try{
             Response response = given()
@@ -124,24 +129,24 @@ public class TestBill extends BaseUtilities {
                     .header("Authorization", "Bearer " + t)
                     .header("content-type","application/json")
                     .when()
-                    .put("/clientStatus/77/newGenerated")
+                    .put("/clientStatus/78/newGenerated")
                     .then()
                     .statusCode(200)
                     .extract().response();
             if (response.statusCode() == 200)
             {
+                log.info("changing client progress status");
                 Assert.assertEquals(response.statusCode(),200);
-                System.out.println(response.getBody().asString());
             }
             else
-                System.out.println("There is an error in changing client status...!!!");
+                log.error("Cannot update client progress status");
         }
         catch (Exception e) {
-            System.out.println(e);
+            log.error("Error message "+e.getMessage());
         }
     }
 
-    @Test(priority = 6)
+    @Test(priority = 21)
     public void change_team_lead_status() {
         try{
             Response response = given()
@@ -150,24 +155,25 @@ public class TestBill extends BaseUtilities {
                     .header("Authorization", "Bearer " + t)
                     .header("content-type","application/json")
                     .when()
-                    .put("/teamStatus/65/newGenerated")
+                    .put("/teamStatus/78/newGenerated")
                     .then()
                     .statusCode(200)
                     .extract().response();
             if (response.statusCode() == 200)
             {
+                log.info("changing team lead progress status");
                 Assert.assertEquals(response.statusCode(),200);
                 System.out.println(response.getBody().asString());
             }
             else
-                System.out.println("There is an error in changing team lead status...!!!");
+                log.error("Cannot update team lead progress status");
         }
         catch (Exception e) {
-            System.out.println(e);
+            log.error("Error message "+e.getMessage());
         }
     }
 
-    @Test(priority = 7)
+    @Test(priority = 22)
     public void get_paid_money() {
         try{
             Response response = given()
@@ -179,16 +185,45 @@ public class TestBill extends BaseUtilities {
                     .then()
                     .statusCode(200)
                     .extract().response();
-            if (response.getBody().asString() != null)
+            if (response.getBody().asString() != null) {
+                log.info("retieving total paid money");
                 System.out.println(response.getBody().asString());
+            }
             else
-                System.out.println("There is an error in total money paid...!!!");
+                log.error("Cannot view total money paid.!");
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            log.error("Error message "+e.getMessage());
         }
     }
 
 
+    /** Negative test case */
+
+
+    @Test(priority = 8)
+    public void get_paid_money_n() {
+        try{
+            Response response = given()
+                    .baseUri(BaseUtilities.url)
+                    .header("Authorization", "Bearer " + t)
+                    .header("content-type","application/json")
+                    .when()
+                    .get("/paidMoney/4/2022")
+                    .then()
+                    .statusCode(200)
+                    .extract().response();
+            if (response.statusCode() == 200){
+                log.info("Invalid test case.!");
+                Assert.assertEquals(response.statusCode(),200);
+            }
+            else
+                log.error("There is an error in total money paid...!!!");
+        }
+        catch (Exception e)
+        {
+            log.error("Error message "+e.getMessage());
+        }
+    }
 }

@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -16,10 +18,12 @@ public class MemberTest {
 
     public static String pat_h = BaseUtilities.path_of_apiDatabase;
     public static String sheetNam_e = "dbb";
-
     public static String token;
     static String member_id;
     public static Map<String, String> List_of_Users = new LinkedHashMap<>();
+    private  static final String LOG_FILE = "log4j.properties";
+    private static Logger log  = LogManager.getLogger(LoginTest.class);
+
 
 
     static String Name_toBeUpdated;
@@ -102,7 +106,7 @@ public class MemberTest {
         token = BaseUtilities.test_get_token();
     }
 
-    @Test(priority = 1)
+    @Test(priority = 23)
     public static void validating_All_Member()
     {
         try{
@@ -140,10 +144,12 @@ public class MemberTest {
 
             if(response.getBody().asString().length() !=0)
             {
+                log.info("validating_All_Member");
                 System.out.println(   size +  "  are available in the list" );
                 Assert.assertTrue(true);
             }else
             {
+                log.error("Can't Validate Error Occured");
                 Assert.assertTrue(false);
             }
         }catch (Exception e){
@@ -153,7 +159,7 @@ public class MemberTest {
 
 
 
-     @Test(priority = 2)
+     @Test(priority = 24)
     public static void validating_Member_by_id()
     {
         try{
@@ -178,11 +184,13 @@ public class MemberTest {
 
             if(BaseUtilities.getCellvalue(BaseUtilities.path_of_apiDatabase,BaseUtilities.sheetName_apiDB,1,0).equals(final_res))
             {
+                log.info("validating_Member_by_id");
                 System.out.println(final_res  + "   Name Matches with the id present in the database");
                 Assert.assertTrue(true);
             }
             else
             {
+                log.error("Can't Validate Member_by_id, Error Occured");
                 Assert.assertTrue(false);
                 System.out.println("Name do not Matches with the id present in the database");
             }
@@ -193,7 +201,7 @@ public class MemberTest {
     }
 
 
-    @Test(priority = 3)
+    @Test(priority = 25)
     public static void validating_UpdateMember()
     {
 
@@ -228,9 +236,13 @@ public class MemberTest {
 
             if(name_inResponse.equals(Name_toBeUpdated))
             {
+                log.info("validating_UpdateMember");
                 System.out.println("Data updation can be done");
                 Assert.assertTrue(true);
             }
+
+            else
+                log.error("Can't Validate UpdateMember, Error Occured");
 
         }catch (Exception e){
             System.out.println(e);
@@ -242,7 +254,7 @@ public class MemberTest {
 
 
 
-    @Test(priority = 4)
+    @Test(priority = 26)
     public static void validating_DeleteMember()
     {
         try{
@@ -264,9 +276,13 @@ public class MemberTest {
 
             if(List_of_Users.get(idTo_beDeleted)==null)
             {
-
+                log.info("validating_DeleteMember");
                 Assert.assertTrue(true);
             }
+
+            else
+                log.error("Can't Validate DeleteMember, Error Occured");
+
         }catch (Exception e){
             System.out.println(e);
         }
@@ -275,15 +291,7 @@ public class MemberTest {
     }
 
 
-
-
-
-
-
-
-
-
-    @Test(priority = 5)
+    @Test(priority = 27)
     public static void validating_addProjects()
     {
 
@@ -314,8 +322,12 @@ public class MemberTest {
 
             if(!statusCode.equals(200))
             {
+                log.info("validating_addProjects");
                 Assert.assertTrue(false);
             }
+
+            else
+                log.error("Can't Validate addProjects, Error Occured");
 
 
         }catch (Exception e){
@@ -324,9 +336,16 @@ public class MemberTest {
 
 
     }
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
 
