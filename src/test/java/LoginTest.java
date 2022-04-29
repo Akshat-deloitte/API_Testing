@@ -57,7 +57,7 @@ public class LoginTest {
 
             int size = response.jsonPath().getList("id").size();
             System.out.println(size);
-            if(size == 14){
+            if(size == 19){
                 log.info("Response recieved");
                 Assert.assertTrue(true);
             }
@@ -90,7 +90,7 @@ public class LoginTest {
 
             int size = response.jsonPath().getList("id").size();
             System.out.println(size);
-            if(size == 0){
+            if(size == 9){
                 log.info("Response recieved");
                 Assert.assertTrue(true);
             }
@@ -149,14 +149,14 @@ public class LoginTest {
                     header("Authorization",
                             "Bearer " + token).header("content-type", "application/json")
                     .when()
-                    .get("/project/89")
+                    .get("/project/98")
                     .then()
                     .statusCode(200)
                     .extract().response();
             System.out.println(response.getBody().asString());
 
 
-            if((get_Int_data_FromJson(response,"projectId") == 89) ){
+            if((get_Int_data_FromJson(response,"projectId") == 98) ){
                  log.info("Response recieved");
                  Assert.assertTrue(true);
            }
@@ -182,7 +182,7 @@ public class LoginTest {
                             "Bearer " + token).header("content-type", "application/json")
                     .body(put_Body())
                     .when()
-                    .put("/project/89")
+                    .put("/project/107")
                     .then()
                     .statusCode(200)
                     .extract().response();
@@ -237,7 +237,7 @@ public class LoginTest {
                             "Bearer " + token).header("content-type", "application/json")
                     .body(invalid_Body())
                     .when()
-                    .put("/project/addMembers/83")
+                    .put("/project/addMembers/107")
                     .then()
                     .extract().response();
 
@@ -257,6 +257,61 @@ public class LoginTest {
     }
 
 
+    /**   Negative test cases   */
+
+    @Test(priority = 8)
+    public void Negative_01() {
+        try {
+
+            Response response = given()
+                    .baseUri(BaseUtilities.url).
+                    header("Authorization",
+                            "Bearer " + token).header("content-type", "application/json")
+                    .when()
+                    .get("/project/84")
+                    .then()
+                    .extract().response();
+            System.out.println(response.getBody().asString());
+
+
+            if(response.statusCode() == 500){
+                log.error("Internal server error , Invalid URL ");
+                Assert.assertTrue(false);
+            }
+
+        } catch (Exception e) {
+            log.error("Error message "+e.getMessage());
+        }
+    }
+
+
+    @Test(priority = 9)
+    public void Negative_02() {
+        try {
+
+            Response response = given()
+                    .baseUri(BaseUtilities.url).
+                    header("Authorization",
+                            "Bearer " + token).header("content-type", "application/json")
+                    .body(invalid_Body())
+                    .when()
+                    .put("/project/107")
+                    .then()
+                    .statusCode(200)
+                    .extract().response();
+
+            System.out.println(response.getBody().asString());
+
+            if(response.statusCode() == 400){
+                log.error("Bad request , Invalid body ");
+                Assert.assertTrue(false);
+            }
+        } catch (Exception e) {
+            log.error("Error message "+e.getMessage());
+        }
+    }
+
+
     public org.json.simple.JSONObject post_Body(){
         org.json.simple.JSONObject obj = new org.json.simple.JSONObject();
         obj.put("title",title);
@@ -269,6 +324,9 @@ public class LoginTest {
         obj.put("completionDate",completionDate);
         return obj;
     }
+
+
+
 
 
     public org.json.simple.JSONObject put_Body() throws IOException {
@@ -325,12 +383,6 @@ public class LoginTest {
         }
 
     }
-
-
-
-
-
-
 }
 
 

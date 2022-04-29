@@ -9,8 +9,8 @@ public class ExtentReport {
         ExtentSparkReporter reporter = new ExtentSparkReporter("C:\\Users\\akashyab\\Desktop\\APITesting_ClientBilling\\API_Testing\\ExtentReports\\Extreport.html");
         extentReports.attachReporter(reporter);
         reporter.config().setTheme(Theme.DARK);
-        reporter.config().setDocumentTitle("XYZ_Bank");
-        reporter.config().setReportName("XYZ_Extent_report");
+        reporter.config().setDocumentTitle("Client Billing API Testing");
+        reporter.config().setReportName("Client Billing API Testing");
         return extentReports;
     }
 }

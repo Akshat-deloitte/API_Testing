@@ -16,12 +16,20 @@ import static io.restassured.RestAssured.given;
 public class MemberTest {
 
 
+
+    public static String pat_h = BaseUtilities.path_of_apiDatabase;
+    public static String sheetNam_e = "dbb";
+
     private  static final String LOG_FILE = "log4j.properties";
     private static Logger log  = LogManager.getLogger(MemberTest.class);
+
 
     public static String token;
     static String member_id;
     public static Map<String, String> List_of_Users = new LinkedHashMap<>();
+    private  static final String LOG_FILE = "log4j.properties";
+    private static Logger log  = LogManager.getLogger(LoginTest.class);
+
 
 
     static String Name_toBeUpdated;
@@ -109,7 +117,7 @@ public class MemberTest {
         token = BaseUtilities.test_get_token();
     }
 
-    @Test(priority = 1)
+    @Test(priority = 23)
     public static void validating_All_Member()
     {
         log.info("validating_All_Member");
@@ -142,10 +150,12 @@ public class MemberTest {
             }
             if(response.getBody().asString().length() !=0)
             {
+                log.info("validating_All_Member");
                 System.out.println(   size +  "  are available in the list" );
                 Assert.assertTrue(true);
             }else
             {
+                log.error("Can't Validate Error Occured");
                 Assert.assertTrue(false);
             }
         }catch (Exception e){
@@ -156,7 +166,7 @@ public class MemberTest {
 
 
 
-     @Test(priority = 2)
+     @Test(priority = 24)
     public static void validating_Member_by_id()
     {
         log.info("validating_Member_by_id");
@@ -182,11 +192,13 @@ public class MemberTest {
 
             if(BaseUtilities.getCellvalue(BaseUtilities.path_of_apiDatabase,BaseUtilities.sheetName_apiDB,1,0).equals(final_res))
             {
+                log.info("validating_Member_by_id");
                 System.out.println(final_res  + "   Name Matches with the id present in the database");
                 Assert.assertTrue(true);
             }
             else
             {
+                log.error("Can't Validate Member_by_id, Error Occured");
                 Assert.assertTrue(false);
                 System.out.println("Name do not Matches with the id present in the database");
             }
@@ -198,7 +210,7 @@ public class MemberTest {
     }
 
 
-    @Test(priority = 3)
+    @Test(priority = 25)
     public static void validating_UpdateMember()
     {
        log.info("validating_UpdateMember");
@@ -233,9 +245,13 @@ public class MemberTest {
 
             if(name_inResponse.equals(Name_toBeUpdated))
             {
+                log.info("validating_UpdateMember");
                 System.out.println("Data updation can be done");
                 Assert.assertTrue(true);
             }
+
+            else
+                log.error("Can't Validate UpdateMember, Error Occured");
 
         }catch (Exception e){
             log.error("Can't Validate Validating Update_Member,Some error Occured");
@@ -248,7 +264,7 @@ public class MemberTest {
 
 
 
-    @Test(priority = 4)
+    @Test(priority = 26)
     public static void validating_DeleteMember()
     {
         log.info("validating_DeleteMember");
@@ -271,9 +287,13 @@ public class MemberTest {
 
             if(List_of_Users.get(idTo_beDeleted)==null)
             {
-
+                log.info("validating_DeleteMember");
                 Assert.assertTrue(true);
             }
+
+            else
+                log.error("Can't Validate DeleteMember, Error Occured");
+
         }catch (Exception e){
             System.out.println(e);
             log.error("Can't Validate Delete Member, Some Error Occured");
@@ -286,7 +306,9 @@ public class MemberTest {
 
 
 
+
     @Test(priority = 5)
+
     public static void validating_addProjects()
     {
         log.info("validating_addProjects");
@@ -363,9 +385,14 @@ public class MemberTest {
             }
             else
             {
+                log.info("validating_addProjects");
                 Assert.assertTrue(false);
                 System.out.println("Unable to detect invalid id");
             }
+
+
+          
+
 
         }catch (Exception e){
             log.error("Can't Validate Member_by id, some error Occurred");
@@ -415,6 +442,7 @@ public class MemberTest {
                 Assert.assertTrue(true);
             }
 
+
         }catch (Exception e){
             log.error("Unable to detect Invalid data");
             System.out.println(e);
@@ -422,6 +450,15 @@ public class MemberTest {
 
 
     }
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -552,4 +589,5 @@ public class MemberTest {
 
 
 }
+
 
