@@ -12,18 +12,25 @@ import static org.hamcrest.Matchers.*;
 
 public class BillTest {
     public String token = "";
+
     File newrequest = new File("C:\\Users\\akashyab\\Desktop\\APITesting_ClientBilling\\API_Testing\\newrequest.json");
     File postrequest = new File("C:\\Users\\akashyab\\Desktop\\APITesting_ClientBilling\\API_Testing\\postrequest.json");
     private  static final String LOG_FILE = "log4j.properties";
     private static Logger log  = LogManager.getLogger(LoginTest.class);
 
+
+
+
+
     @BeforeTest
-    public void getting_token() throws IOException
-    {
-        token = BaseUtilities.test_get_token();
+    public void Get_Bearer_Token() throws IOException {
+         token = BaseUtilities.test_get_token();
     }
 
-    @Test(priority = 8)
+
+
+    @Test(priority = 20)
+
     public void Get_All_Bills(){
         try{
 
@@ -55,7 +62,9 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 9)
+
+    @Test(priority = 21)
+
     public void Get_Bill_By_id(){
         try{
 
@@ -85,7 +94,9 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 10)
+
+    @Test(priority = 22)
+
     public void Paid_bills(){
         try{
 
@@ -115,7 +126,9 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 11)
+
+    @Test(priority = 23)
+
     public void New_Request(){
         try
         {
@@ -146,7 +159,9 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 12)
+
+    @Test(priority = 24)
+
     public void Send_mail_to_Client(){
         try{
 
@@ -176,7 +191,9 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 13)
+
+    @Test(priority = 25)
+
     public void Change_Status(){
         try{
 
@@ -206,6 +223,7 @@ public class BillTest {
             log.error("Error message "+e.getMessage());
         }
     }
+
 
     @Test(priority = 14)
     public void Delete_Request(){
@@ -238,7 +256,10 @@ public class BillTest {
         }
     }
 
-    @Test(priority = 15)
+
+
+    @Test(priority = 26)
+
     public void Post_Request(){
         try{
 

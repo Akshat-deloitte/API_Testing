@@ -10,21 +10,27 @@ import static io.restassured.RestAssured.given;
 
 public class TestBill extends BaseUtilities {
     public String t = "";
+
     File new_request = new File("C:\\Users\\akashyab\\Desktop\\APITesting_ClientBilling\\API_Testing\\new_request.json");
     private  static final String LOG_FILE = "log4j.properties";
     private static Logger log  = LogManager.getLogger(LoginTest.class);
+
 
     /**
      * t -> variable to store the token data
      * new_request -> fetches the new_request json file from the system
      */
 
+
     @BeforeTest
-    public void get_token() throws IOException {
-        t = BaseUtilities.test_get_token();
+    public void Get_Bearer_Token() throws IOException {
+         t = BaseUtilities.test_get_token();
     }
 
+
     @Test(priority = 16)
+
+ 
     public void send_mail_to_team_lead() {
         try{
             Response response = given()
@@ -51,12 +57,15 @@ public class TestBill extends BaseUtilities {
         }
     }
 
+
     @Test(priority = 17)
+
+ 
     public void get_verified_bills(){
         try{
             Response response = given()
                     .baseUri(BaseUtilities.url)
-                    .header("Authorization", "Bearer " + t)
+                    .header("Authorization", "Bearer " +t )
                     .header("content-type","application/json")
                     .when()
                     .get("/bill/verified/4/2022")
@@ -74,7 +83,9 @@ public class TestBill extends BaseUtilities {
         }
     }
 
+
     @Test(priority = 18)
+
     public void get_unverified_bills(){
         try{
             Response response = given()
@@ -97,7 +108,9 @@ public class TestBill extends BaseUtilities {
         }
     }
 
+
     @Test(priority = 19)
+
     public void unpaid_bills() {
         try{
             Response response = given()
@@ -120,7 +133,9 @@ public class TestBill extends BaseUtilities {
         }
     }
 
+
     @Test(priority = 20)
+
     public void change_client_status() {
         try{
             Response response = given()
@@ -146,7 +161,9 @@ public class TestBill extends BaseUtilities {
         }
     }
 
+
     @Test(priority = 21)
+
     public void change_team_lead_status() {
         try{
             Response response = given()
@@ -173,7 +190,9 @@ public class TestBill extends BaseUtilities {
         }
     }
 
+
     @Test(priority = 22)
+
     public void get_paid_money() {
         try{
             Response response = given()
